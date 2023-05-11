@@ -13,9 +13,15 @@ int main(void)
 	ssize_t read;
 
 	putchar('$');
-	putchar('\n');
+	putchar(' ');
 	read = getline(&ptr, &len, stdin);
 	putchar(read);
+	if (read != '\0')
+	{
+		printf("%s", ptr);
+	}
+	else
+		printf("Error");
 	free(ptr);
 	return (0);
 }
