@@ -21,7 +21,6 @@ void read_prompt(char *command)
 	{
 		if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL)
 		{
-			perror("fgets");
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -52,7 +51,7 @@ int write_command(char *command, char **args)
 	return (i);
 }
 
-void execute_command(char **args)
+void execute_command(char *command)
 {
 	pid_t pid;
 
@@ -64,13 +63,15 @@ void execute_command(char **args)
 	}
 	else if (pid == 0)
 	{
+		char *args[] = {"/bin/sh", "-c", command, NULL};
 		execvp(args[0], args);
 		fprintf(stderr, "./shell: No such file or directory\n");
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		wait(NULL);
+		int status;
+		waitpid(pid, &status, 0);
 	}
 }
 
@@ -97,7 +98,7 @@ int main(void)
 			if (strcmp(args[0], "exit") == 0)
 				exit(EXIT_SUCCESS);
 			else
-				execute_command(args);
+				execute_command(command);
 		}
 	}
 	return (0);
