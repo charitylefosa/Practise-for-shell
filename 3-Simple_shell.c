@@ -11,11 +11,21 @@
 
 void read_prompt(char *command)
 {
-	printf("$ ");
-	fflush(stdout);
-	fgets(command, MAX_COMMAND_LENGTH, stdin);
+	if (isatty(STDIN_FILENO))
+	{
+		printf("$ ");
+		fflush(stdout);
+		fgets(command, MAX_COMMAND_LENGTH, stdin);
+	}
+	else
+	{
+		if (fgets(command, MAX_COMMAND_LENGTH, stdin) == NULL)
+		{
+			perror("fgets");
+			exit(EXIT_FAILURE);
+		}
+	}
 }
-
 void print_env(void)
 {
 	char **env = environ;
