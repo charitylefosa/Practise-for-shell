@@ -1,6 +1,4 @@
-SIMPLE SHELL PROJECT BY NKATEKO HLATSHWAYO AND CHARITY LEFOSA
-
-Project that covers the following
+Practising for a team SHELL project that covers the following
 
 Shell basics: Understanding how a shell works, including input/output, redirection, and piping.
 
